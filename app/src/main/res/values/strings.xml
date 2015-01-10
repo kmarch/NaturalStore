@@ -9,11 +9,11 @@
         <item>Animal</item>
         <item>Plante</item>
     </string-array>
-    <string-array name="plants">
+    <string-array name="plantsSize">
         <item>+50</item>
         <item>-50</item>
     </string-array>
-    <string-array name="animalKind">
+    <string-array name="animalType">
         <item>Invertébré</item>
         <item>Vertébré</item>
     </string-array>

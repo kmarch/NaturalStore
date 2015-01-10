@@ -8,15 +8,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 
 public class DataEntryActivity extends ActionBarActivity implements View.OnTouchListener{
@@ -37,23 +42,54 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnTouch
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
         comment = (TextView) findViewById(R.id.CommentSetter);
-        ((Button) findViewById(R.id.SendButton)).setOnTouchListener(this);
-//        TextView name = new TextView(this);
-//        name.setText("Kevin");
-//        RelativeLayout dynamicLayout = (RelativeLayout) findViewById(R.id.DynalicLayout);
-//        dynamicLayout.addView(name);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String[] arrayType = getResources().getStringArray(R.array.types);
+                RelativeLayout dynamicLayout = (RelativeLayout) findViewById(R.id.DynalicLayout);
+                dynamicLayout.removeAllViews();
+                if (spinner.getSelectedItem().equals(arrayType[0])) {
+                    addSizeOption(dynamicLayout);
+                } else {
+                    addAnimalTypeOption(dynamicLayout);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
     }
 
     public boolean onTouch(View v, MotionEvent event) {
-        String []  arrayType =  getResources().getStringArray(R.array.types);
-        if (spinner.getSelectedItem().equals(arrayType[0])) {
-            comment.setText("1");
-        } else {
-            comment.setText("0");
-        }
-//        InputMethodManager inputMgr = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
-//        inputMgr.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+
         return true;
+    }
+
+    public void addSizeOption(RelativeLayout dynamicLayout) {
+        TextView sizeLabel = new TextView(this);
+        sizeLabel.setText("Taille");
+        Spinner spinnerSize = new Spinner(this);
+        ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                getResources().getStringArray(R.array.plantsSize));
+        dynamicLayout.addView(sizeLabel);
+        spinnerSize.setAdapter(spinnerArrayAdapter);
+        dynamicLayout.addView(spinnerSize);
+    }
+
+    public void addAnimalTypeOption(RelativeLayout dynamicLayout) {
+        TextView typeLabel = new TextView(this);
+        typeLabel.setText("Type");
+        Spinner spinnerType = new Spinner(this);
+        ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                getResources().getStringArray(R.array.animalType));
+        dynamicLayout.addView(typeLabel);
+        spinnerType.setAdapter(spinnerArrayAdapter);
+        dynamicLayout.addView(spinnerType);
     }
 
     @Override

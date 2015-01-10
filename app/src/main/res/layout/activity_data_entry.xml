@@ -13,8 +13,7 @@
         android:text="Saisie de la clé de détermination"
         android:id="@+id/TitleLabel"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:editable="false" />
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:layout_width="wrap_content"
