@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="m2dl.com.naturalstore.DataEntry">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Saisie de la clé de détermination"
+        android:id="@+id/TitleLabel"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:editable="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Type de données"
+        android:id="@+id/DataTypeLabel"
+        android:layout_below="@+id/TitleLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="71dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Envoyer"
+        android:id="@+id/bnt"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Commentaire"
+        android:id="@+id/CommentLabel"
+        android:layout_marginBottom="93dp"
+        android:layout_above="@+id/bnt"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/CommentSetter"
+        android:layout_alignTop="@+id/CommentLabel"
+        android:layout_above="@+id/bnt"
+        android:layout_alignEnd="@+id/TitleLabel"
+        android:layout_alignStart="@+id/bnt"
+        android:inputType="text"
+        android:background="@color/primary_material_light"
+        android:textIsSelectable="true"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/SpinnerChoise"
+        android:layout_alignStart="@+id/CommentSetter"
+        android:layout_alignTop="@+id/DataTypeLabel"
+        android:layout_alignEnd="@+id/TitleLabel"
+        android:prompt="@string/hello_world" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/SpinnerChoise"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/CommentLabel"
+        android:id="@+id/DynalicLayout"></RelativeLayout>
+
+</RelativeLayout>

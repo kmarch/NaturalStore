@@ -4,5 +4,9 @@
     <string name="app_name">NaturalStore</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+    <string name="title_activity_data_entry">DataEntry</string>
+    <string-array name="types">
+        <item>Animal</item>
+        <item>Plante</item>
+    </string-array>
 </resources>
