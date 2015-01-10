@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -18,7 +19,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 
-public class DataEntry extends ActionBarActivity implements View.OnTouchListener{
+public class DataEntryActivity extends ActionBarActivity implements View.OnTouchListener{
 
     private Spinner spinner;
     private TextView comment;
@@ -36,7 +37,7 @@ public class DataEntry extends ActionBarActivity implements View.OnTouchListener
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
         comment = (TextView) findViewById(R.id.CommentSetter);
-        comment.setOnTouchListener(this);
+        ((Button) findViewById(R.id.SendButton)).setOnTouchListener(this);
 //        TextView name = new TextView(this);
 //        name.setText("Kevin");
 //        RelativeLayout dynamicLayout = (RelativeLayout) findViewById(R.id.DynalicLayout);
@@ -44,6 +45,12 @@ public class DataEntry extends ActionBarActivity implements View.OnTouchListener
     }
 
     public boolean onTouch(View v, MotionEvent event) {
+        String []  arrayType =  getResources().getStringArray(R.array.types);
+        if (spinner.getSelectedItem().equals(arrayType[0])) {
+            comment.setText("1");
+        } else {
+            comment.setText("0");
+        }
 //        InputMethodManager inputMgr = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
 //        inputMgr.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
         return true;

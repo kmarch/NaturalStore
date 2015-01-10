@@ -9,4 +9,12 @@
         <item>Animal</item>
         <item>Plante</item>
     </string-array>
+    <string-array name="plants">
+        <item>+50</item>
+        <item>-50</item>
+    </string-array>
+    <string-array name="animalKind">
+        <item>Invertébré</item>
+        <item>Vertébré</item>
+    </string-array>
 </resources>
