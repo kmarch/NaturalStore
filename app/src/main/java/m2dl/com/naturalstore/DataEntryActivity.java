@@ -23,16 +23,21 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import m2dl.com.naturalstore.parser.XMLParser;
+
 
 public class DataEntryActivity extends ActionBarActivity implements View.OnTouchListener{
 
     private Spinner spinner;
-    private TextView comment;
+    private Spinner dynamicalSpinner;
+    public TextView comment;
+    private String GPS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_entry);
+        ((Button) findViewById(R.id.SendButton)).setOnTouchListener(this);
         spinner = (Spinner) findViewById(R.id.SpinnerChoise);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -64,32 +69,39 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnTouch
     }
 
     public boolean onTouch(View v, MotionEvent event) {
-
+        String[] arrayType = getResources().getStringArray(R.array.types);
+        XMLParser xmlParser =  new XMLParser(this);
+        if (spinner.getSelectedItem().toString().equals(arrayType[0])) {
+            xmlParser.parseAnimal();
+        } else {
+            xmlParser.parsePlant();
+        }
+        xmlParser.saveXML();
         return true;
     }
 
     public void addSizeOption(RelativeLayout dynamicLayout) {
         TextView sizeLabel = new TextView(this);
         sizeLabel.setText("Taille");
-        Spinner spinnerSize = new Spinner(this);
+        dynamicalSpinner = new Spinner(this);
         ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 getResources().getStringArray(R.array.plantsSize));
         dynamicLayout.addView(sizeLabel);
-        spinnerSize.setAdapter(spinnerArrayAdapter);
-        dynamicLayout.addView(spinnerSize);
+        dynamicalSpinner.setAdapter(spinnerArrayAdapter);
+        dynamicLayout.addView(dynamicalSpinner);
     }
 
     public void addAnimalTypeOption(RelativeLayout dynamicLayout) {
         TextView typeLabel = new TextView(this);
         typeLabel.setText("Type");
-        Spinner spinnerType = new Spinner(this);
+        dynamicalSpinner = new Spinner(this);
         ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 getResources().getStringArray(R.array.animalType));
         dynamicLayout.addView(typeLabel);
-        spinnerType.setAdapter(spinnerArrayAdapter);
-        dynamicLayout.addView(spinnerType);
+        dynamicalSpinner.setAdapter(spinnerArrayAdapter);
+        dynamicLayout.addView(dynamicalSpinner);
     }
 
     @Override
@@ -112,5 +124,17 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnTouch
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public String getGPS() {
+        return GPS;
+    }
+
+    public String getDynamicalSpinnerValue() {
+        return dynamicalSpinner.getSelectedItem().toString();
+    }
+
+    public String getComment() {
+        return comment.getText().toString();
     }
 }

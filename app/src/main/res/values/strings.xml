@@ -5,6 +5,17 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_data_entry">DataEntry</string>
+    <string name="xmlFileName">cle.xml</string>
+    <string name="rootElement">cle</string>
+    <string name="gps">gps</string>
+    <string name="type1">animal</string>
+    <string name="type2">plant</string>
+    <string name="comment">comment</string>
+    <string name="type1SubType">animalType</string>
+    <string name="type2SubType">plantSize</string>
+    <string name="type1SubTypeAttribute">type</string>
+    <string name="type2SubTypeAttribute">size</string>
+
     <string-array name="types">
         <item>Animal</item>
         <item>Plante</item>
