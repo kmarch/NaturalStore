@@ -2,10 +2,12 @@ package m2dl.com.naturalstore.parser;
 
 
 import android.content.Context;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,13 +32,13 @@ import m2dl.com.naturalstore.R;
 /**
  * Created by kevin marchois on 11/01/2015.
  */
-public class XMLParser {
+public class XMLSaver {
 
     private DataEntryActivity dataEntryActivity;
     private Document doc;
-    private Element rootElement;
+    private Node rootElement;
 
-    public XMLParser(DataEntryActivity dataEntryActivity) {
+    public XMLSaver(DataEntryActivity dataEntryActivity) {
         this.dataEntryActivity = dataEntryActivity;
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -47,47 +49,17 @@ public class XMLParser {
             rootElement = doc.createElement(
                     dataEntryActivity.getResources().getString(R.string.rootElement));
             doc.appendChild(rootElement);
-            Element gpsElement = doc.createElement(
-                    dataEntryActivity.getResources().getString(R.string.gps));
-            gpsElement.setNodeValue(dataEntryActivity.getGPS());
-            rootElement.appendChild(gpsElement);
-
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
         }
     }
 
-    public void parseAnimal() {
-        Element animalElement = doc.createElement(
-                dataEntryActivity.getResources().getString(R.string.type1));
-        rootElement.appendChild(animalElement);
-        Element animalTypeElement = doc.createElement(
-                dataEntryActivity.getResources().getString(R.string.type1SubType));
-        animalTypeElement.setAttribute(
-                dataEntryActivity.getResources().getString(R.string.type1SubTypeAttribute),
-                dataEntryActivity.getDynamicalSpinnerValue());
-        animalElement.appendChild(animalTypeElement);
-        Element commentElement = doc.createElement(
-                dataEntryActivity.getResources().getString(R.string.comment));
-        commentElement.setNodeValue(dataEntryActivity.getComment());
-        rootElement.appendChild(commentElement);
-    }
 
-    public void parsePlant() {
-        Element plantElement = doc.createElement(
-                dataEntryActivity.getResources().getString(R.string.type2));
-        rootElement.appendChild(plantElement);
-        Element plantTypeElement = doc.createElement(
-                dataEntryActivity.getResources().getString(R.string.type2SubType));
-        plantTypeElement.setAttribute(
-                dataEntryActivity.getResources().getString(R.string.type2SubTypeAttribute),
-                dataEntryActivity.getDynamicalSpinnerValue());
-        plantElement.appendChild(plantTypeElement);
-        Element commentElement = doc.createElement(
-                dataEntryActivity.getResources().getString(R.string.comment));
-        commentElement.setNodeValue(dataEntryActivity.getComment());
-        rootElement.appendChild(commentElement);
-
+    public void appendNode(Node toAppend) {
+        Node newNode = doc.createElement(toAppend.getNodeName());
+        newNode.setNodeValue(toAppend.getNodeValue());
+        rootElement.appendChild(newNode);
+        rootElement = toAppend;
     }
 
     public void saveXML() {
@@ -102,6 +74,7 @@ public class XMLParser {
             transformer.transform(new DOMSource(doc), new StreamResult(sw));
             outputStream.write(sw.toString().getBytes());
             outputStream.close();
+            dataEntryActivity.comment.setText(sw.toString());
         } catch (Exception e) {
             e.printStackTrace();
 

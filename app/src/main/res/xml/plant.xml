@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <plant>
+        <element label = "name"></element>
+        <list label = "Taille">
+            <value>+50</value>
+            <value>-50</value>
+        </list>
+    </plant>
+</PreferenceScreen>

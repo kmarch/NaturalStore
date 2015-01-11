@@ -1,109 +1,62 @@
 package m2dl.com.naturalstore;
 
-import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
-import java.util.ArrayList;
-
-import m2dl.com.naturalstore.parser.XMLParser;
+import m2dl.com.naturalstore.parser.XMLReader;
+import m2dl.com.naturalstore.parser.XMLSaver;
 
 
 public class DataEntryActivity extends ActionBarActivity implements View.OnTouchListener{
 
     private Spinner spinner;
-    private Spinner dynamicalSpinner;
     public TextView comment;
+    public XMLSaver xmlSaver;
+    private XMLReader xmlInitializer;
     private String GPS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_entry);
+        xmlInitializer =  new XMLReader(this);
+        xmlSaver = new XMLSaver(this);
+        String [] initArray = new String[3];
+        initArray[0] = "choisissez";
+        initArray[1] = xmlInitializer.getDoc().getFirstChild().getFirstChild().getNodeName();
+        initArray[2] = xmlInitializer.getDoc().getFirstChild().getLastChild().getNodeName();
         ((Button) findViewById(R.id.SendButton)).setOnTouchListener(this);
         spinner = (Spinner) findViewById(R.id.SpinnerChoise);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.types, android.R.layout.simple_spinner_item);
+        setSpinnerValues(initArray);
+        comment = (TextView) findViewById(R.id.CommentSetter);
+        spinner.setOnItemSelectedListener(createListener());
+    }
+
+    private void setSpinnerValues(String[] initArray) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, initArray);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-        comment = (TextView) findViewById(R.id.CommentSetter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                String[] arrayType = getResources().getStringArray(R.array.types);
-                RelativeLayout dynamicLayout = (RelativeLayout) findViewById(R.id.DynalicLayout);
-                dynamicLayout.removeAllViews();
-                if (spinner.getSelectedItem().equals(arrayType[0])) {
-                    addSizeOption(dynamicLayout);
-                } else {
-                    addAnimalTypeOption(dynamicLayout);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-
-        });
     }
 
     public boolean onTouch(View v, MotionEvent event) {
-        String[] arrayType = getResources().getStringArray(R.array.types);
-        XMLParser xmlParser =  new XMLParser(this);
-        if (spinner.getSelectedItem().toString().equals(arrayType[0])) {
-            xmlParser.parseAnimal();
-        } else {
-            xmlParser.parsePlant();
-        }
-        xmlParser.saveXML();
+        xmlSaver.saveXML();
         return true;
     }
-
-    public void addSizeOption(RelativeLayout dynamicLayout) {
-        TextView sizeLabel = new TextView(this);
-        sizeLabel.setText("Taille");
-        dynamicalSpinner = new Spinner(this);
-        ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,
-                android.R.layout.simple_spinner_dropdown_item,
-                getResources().getStringArray(R.array.plantsSize));
-        dynamicLayout.addView(sizeLabel);
-        dynamicalSpinner.setAdapter(spinnerArrayAdapter);
-        dynamicLayout.addView(dynamicalSpinner);
-    }
-
-    public void addAnimalTypeOption(RelativeLayout dynamicLayout) {
-        TextView typeLabel = new TextView(this);
-        typeLabel.setText("Type");
-        dynamicalSpinner = new Spinner(this);
-        ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,
-                android.R.layout.simple_spinner_dropdown_item,
-                getResources().getStringArray(R.array.animalType));
-        dynamicLayout.addView(typeLabel);
-        dynamicalSpinner.setAdapter(spinnerArrayAdapter);
-        dynamicLayout.addView(dynamicalSpinner);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -130,11 +83,48 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnTouch
         return GPS;
     }
 
-    public String getDynamicalSpinnerValue() {
-        return dynamicalSpinner.getSelectedItem().toString();
-    }
-
     public String getComment() {
         return comment.getText().toString();
     }
+
+    public void changeValues() {
+        String itemSelect  = spinner.getSelectedItem().toString();
+        Document doc = xmlInitializer.getDoc();
+        String [] initArray;
+        Node node = doc.getElementsByTagName(itemSelect).item(0);
+        if(node != null && node.getChildNodes().getLength() == 1) {
+            initArray = new String [1];
+            initArray[0] = node.getFirstChild().getNodeValue();
+            setSpinnerValues(initArray);
+        } else if(node != null){
+            initArray = new String[3];
+            initArray[0] = "choisissez";
+            initArray[1] = node.getChildNodes().item(0).getNodeName();
+            initArray[2] = node.getChildNodes().item(1).getNodeName();
+            setSpinnerValues(initArray);
+        }
+        spinner.setOnItemSelectedListener(createListener());
+        xmlSaver.appendNode(node);
+    }
+
+    public AdapterView.OnItemSelectedListener createListener() {
+        return new AdapterView.OnItemSelectedListener() {
+            private int check = 0;
+
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if (check!=0) {
+                    changeValues();
+                }
+                check++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        };
+    }
+
 }

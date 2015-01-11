@@ -15,6 +15,8 @@
     <string name="type2SubType">plantSize</string>
     <string name="type1SubTypeAttribute">type</string>
     <string name="type2SubTypeAttribute">size</string>
+    <string name="animalTemplate">animal.xml</string>
+    <string name="plantTemplate">plant.xml</string>
 
     <string-array name="types">
         <item>Animal</item>

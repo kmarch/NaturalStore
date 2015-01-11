@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen id="0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <root id="1">
+        <plante id="7">
+            canabis
+        </plante>
+        <animal id="2">
+            <pate id="3">
+                <poil id="4">
+                    lapin
+                </poil>
+                <sansPoil id="5">
+                    serpent
+                </sansPoil>
+            </pate>
+            <sansPate id="5">
+                alien
+            </sansPate>
+        </animal>
+    </root>
+</PreferenceScreen>
