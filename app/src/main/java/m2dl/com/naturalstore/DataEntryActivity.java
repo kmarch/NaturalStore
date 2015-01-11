@@ -104,7 +104,7 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnTouch
             setSpinnerValues(initArray);
         }
         spinner.setOnItemSelectedListener(createListener());
-        xmlSaver.appendNode(node);
+        xmlSaver.appendNode(node.getNodeName(), node.getNodeValue());
     }
 
     public AdapterView.OnItemSelectedListener createListener() {

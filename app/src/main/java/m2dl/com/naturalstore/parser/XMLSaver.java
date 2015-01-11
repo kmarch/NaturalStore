@@ -55,11 +55,11 @@ public class XMLSaver {
     }
 
 
-    public void appendNode(Node toAppend) {
-        Node newNode = doc.createElement(toAppend.getNodeName());
-        newNode.setNodeValue(toAppend.getNodeValue());
+    public void appendNode(String nodeName, String nodeValue) {
+        Node newNode = doc.createElement(nodeName);
+        newNode.setNodeValue(nodeValue);
         rootElement.appendChild(newNode);
-        rootElement = toAppend;
+        rootElement = newNode;
     }
 
     public void saveXML() {
@@ -77,7 +77,6 @@ public class XMLSaver {
             dataEntryActivity.comment.setText(sw.toString());
         } catch (Exception e) {
             e.printStackTrace();
-
         }
         //Read text from file
         StringBuilder text = new StringBuilder();
