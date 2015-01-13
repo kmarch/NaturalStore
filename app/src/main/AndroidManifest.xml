@@ -13,7 +13,8 @@
         </activity>
         <activity
             android:name=".DataEntryActivity"
-            android:label="@string/title_activity_data_entry">
+            android:label="@string/title_activity_data_entry"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -8,26 +8,5 @@
     <string name="xmlFileName">cle.xml</string>
     <string name="rootElement">cle</string>
     <string name="gps">gps</string>
-    <string name="type1">animal</string>
-    <string name="type2">plant</string>
     <string name="comment">comment</string>
-    <string name="type1SubType">animalType</string>
-    <string name="type2SubType">plantSize</string>
-    <string name="type1SubTypeAttribute">type</string>
-    <string name="type2SubTypeAttribute">size</string>
-    <string name="animalTemplate">animal.xml</string>
-    <string name="plantTemplate">plant.xml</string>
-
-    <string-array name="types">
-        <item>Animal</item>
-        <item>Plante</item>
-    </string-array>
-    <string-array name="plantsSize">
-        <item>+50</item>
-        <item>-50</item>
-    </string-array>
-    <string-array name="animalType">
-        <item>Invertébré</item>
-        <item>Vertébré</item>
-    </string-array>
 </resources>

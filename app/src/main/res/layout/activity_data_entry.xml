@@ -53,6 +53,7 @@
         android:inputType="text"
         android:background="@color/primary_material_light"
         android:textIsSelectable="true"
+        android:editable="true"
         android:text="Commentaire" />
 
     <Spinner

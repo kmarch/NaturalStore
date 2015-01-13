@@ -34,9 +34,7 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnTouch
         xmlInitializer =  new XMLReader(this);
         xmlSaver = new XMLSaver(this);
         String [] initArray = new String[3];
-        initArray[0] = "choisissez";
-        initArray[1] = xmlInitializer.getDoc().getFirstChild().getFirstChild().getNodeName();
-        initArray[2] = xmlInitializer.getDoc().getFirstChild().getLastChild().getNodeName();
+        initArray = initSpinnerArray(xmlInitializer.getDoc().getFirstChild());
         ((Button) findViewById(R.id.SendButton)).setOnTouchListener(this);
         spinner = (Spinner) findViewById(R.id.SpinnerChoise);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -97,14 +95,21 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnTouch
             initArray[0] = node.getFirstChild().getNodeValue();
             setSpinnerValues(initArray);
         } else if(node != null){
-            initArray = new String[3];
-            initArray[0] = "choisissez";
-            initArray[1] = node.getChildNodes().item(0).getNodeName();
-            initArray[2] = node.getChildNodes().item(1).getNodeName();
+            initArray = initSpinnerArray(node);
             setSpinnerValues(initArray);
         }
         spinner.setOnItemSelectedListener(createListener());
         xmlSaver.appendNode(node.getNodeName(), node.getNodeValue());
+    }
+
+    private String[] initSpinnerArray(Node node) {
+        String[] initArray;
+        initArray = new String[node.getChildNodes().getLength()+1];
+        initArray[0] = "choisissez";
+        for(int i = 1; i<= node.getChildNodes().getLength(); i++ ){
+            initArray[i] = node.getChildNodes().item(i-1).getNodeName();
+        }
+        return initArray;
     }
 
     public AdapterView.OnItemSelectedListener createListener() {

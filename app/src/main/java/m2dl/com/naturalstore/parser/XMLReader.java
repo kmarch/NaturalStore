@@ -41,7 +41,7 @@ public class XMLReader {
     public XMLReader(DataEntryActivity dataEntryActivity) {
         this.dataEntryActivity  = dataEntryActivity;
         XmlResourceParser xml ;
-           xml = dataEntryActivity.getResources().getXml(R.xml.animal);
+           xml = dataEntryActivity.getResources().getXml(R.xml.config);
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
