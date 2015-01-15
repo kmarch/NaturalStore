@@ -1,15 +1,32 @@
 package m2dl.com.naturalstore;
 
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.io.File;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 
 public class HomeActivity extends ActionBarActivity {
 
+    private Uri imageUri;
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +34,10 @@ public class HomeActivity extends ActionBarActivity {
         setContentView(R.layout.activity_home);
     }
 
+    public void takePhoto(View view) {
+        Intent intent = new Intent(this, CameraActivity.class);
+        this.startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

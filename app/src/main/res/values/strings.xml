@@ -5,6 +5,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_data_entry">DataEntry</string>
+    <string name="camera_description">Take a picture with camera</string>
+    <string name="title_activity_camera">CameraActivity</string>
+    <string name="picture_description">Picture taken</string>
     <string name="xmlFileName">cle.xml</string>
     <string name="rootElement">cle</string>
     <string name="gps">gps</string>
