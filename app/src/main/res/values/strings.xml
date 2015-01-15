@@ -11,5 +11,6 @@
     <string name="xmlFileName">cle.xml</string>
     <string name="rootElement">cle</string>
     <string name="gps">gps</string>
-    <string name="comment">comment</string>
+    <string name="defaultComment">Commentaire</string>
+    <string name="defaultChoices"></string>
 </resources>
