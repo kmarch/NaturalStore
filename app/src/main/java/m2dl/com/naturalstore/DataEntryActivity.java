@@ -44,8 +44,8 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
         xmlSaver = new XMLSaver(this);
         String [] initArray;
         initArray = initSpinnerArray(xmlInitializer.getDoc().getFirstChild());
-        ((Button) findViewById(R.id.SendButton)).setOnTouchListener(this);
-        ((Button) findViewById(R.id.CancelButton)).setOnTouchListener(this);
+        ((Button) findViewById(R.id.SendButton)).setOnClickListener(this);
+        ((Button) findViewById(R.id.CancelButton)).setOnClickListener(this);
         // Create an ArrayAdapter using the string array and a default spinner layout
         setSpinnerValues(initArray);
         spinner.setOnItemSelectedListener(createListener());
@@ -66,21 +66,15 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
         return true;
     }
         public void onClick(View v) {
-            if(v.getId() == R.id.SendButton) {
+            if (v.getId() == R.id.SendButton) {
                 xmlSaver.saveXML();
-            new MultiThread().execute("");
+                new MultiThread().execute("");
 
-        } else {
+            } else {
                 initComponentsValues();
-                
-        }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_data_entry, menu);
-        return true;
-    }
+            }
+        }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
