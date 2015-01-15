@@ -13,8 +13,7 @@
         android:text="Saisie de la clé de détermination"
         android:id="@+id/TitleLabel"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:editable="false" />
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,7 +52,9 @@
         android:layout_alignStart="@+id/SendButton"
         android:inputType="text"
         android:background="@color/primary_material_light"
-        android:textIsSelectable="true"/>
+        android:textIsSelectable="true"
+        android:editable="true"
+        android:text="Commentaire" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -64,12 +65,14 @@
         android:layout_alignEnd="@+id/TitleLabel"
         android:prompt="@string/hello_world" />
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@+id/SpinnerChoise"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/CommentLabel"
-        android:id="@+id/DynalicLayout"></RelativeLayout>
+        android:layout_alignParentEnd="true"
+        android:id="@+id/DynalicLayout"></LinearLayout>
 
 </RelativeLayout>
