@@ -53,7 +53,13 @@ public class CameraActivity extends ActionBarActivity {
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStoragePublicDirectory(
                     Environment.DIRECTORY_PICTURES).toString()+File.separator + "temp.png", options);
+            System.out.println("iv = "+imageView+" bmp = "+bitmap);
             imageView.setImageBitmap(bitmap);
+            System.out.println(imageView.getHeight());
+            float ratio = Math.min((imageView.getLayoutParams().width / bitmap.getWidth()), (imageView.getLayoutParams().height / bitmap.getHeight()));
+            ratio = 0.5f;
+            System.out.println(ratio);
+            imageView.setImageBitmap(Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth()*ratio),(int) (bitmap.getHeight()*ratio) ,false));
 
             //set listener
             imageView.setOnTouchListener(new View.OnTouchListener() {
@@ -76,6 +82,7 @@ public class CameraActivity extends ActionBarActivity {
                         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                         bmporiginal = BitmapFactory.decodeFile(Environment.getExternalStoragePublicDirectory(
                                 Environment.DIRECTORY_PICTURES).toString()+File.separator + "temp.png", options);
+                        bmporiginal = Bitmap.createScaledBitmap(bmporiginal, (int) (bmporiginal.getWidth()*0.5f),(int) (bmporiginal.getHeight()*0.5f) ,false);
                         imageView.setImageBitmap(bmporiginal);
                     }
 
