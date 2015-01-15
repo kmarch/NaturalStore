@@ -15,11 +15,13 @@ import android.widget.TextView;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import m2dl.com.naturalstore.mail.MultiThread;
+import m2dl.com.naturalstore.mail.MultiThread;
 import m2dl.com.naturalstore.parser.XMLReader;
 import m2dl.com.naturalstore.parser.XMLSaver;
 
 
-public class DataEntryActivity extends ActionBarActivity implements View.OnTouchListener{
+public class DataEntryActivity extends ActionBarActivity implements View.OnClickListener {
 
     private Spinner spinner;
     private XMLSaver xmlSaver;
@@ -52,7 +54,7 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnTouch
     }
 
     private void setSpinnerValues(String[] initArray) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, initArray);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, initArray);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
@@ -60,13 +62,19 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnTouch
     }
 
     public boolean onTouch(View v, MotionEvent event) {
-        if(v.getId() == R.id.SendButton) {
-            xmlSaver.saveXML();
-        } else {
-            initComponentsValues();
-        }
+        
         return true;
     }
+        public void onClick(View v) {
+            if(v.getId() == R.id.SendButton) {
+                xmlSaver.saveXML();
+            new MultiThread().execute("");
+
+        } else {
+                initComponentsValues();
+                
+        }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
