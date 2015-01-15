@@ -33,7 +33,7 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnTouch
         setContentView(R.layout.activity_data_entry);
         xmlInitializer =  new XMLReader(this);
         xmlSaver = new XMLSaver(this);
-        String [] initArray = new String[3];
+        String [] initArray;
         initArray = initSpinnerArray(xmlInitializer.getDoc().getFirstChild());
         ((Button) findViewById(R.id.SendButton)).setOnTouchListener(this);
         spinner = (Spinner) findViewById(R.id.SpinnerChoise);

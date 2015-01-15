@@ -38,41 +38,27 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Commentaire"
         android:id="@+id/CommentLabel"
-        android:layout_marginBottom="93dp"
-        android:layout_above="@+id/SendButton"
+        android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/CommentSetter"
-        android:layout_alignTop="@+id/CommentLabel"
-        android:layout_above="@+id/SendButton"
-        android:layout_alignEnd="@+id/TitleLabel"
-        android:layout_alignStart="@+id/SendButton"
-        android:inputType="text"
-        android:background="@color/primary_material_light"
-        android:textIsSelectable="true"
-        android:editable="true"
-        android:text="Commentaire" />
 
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/SpinnerChoise"
-        android:layout_alignStart="@+id/CommentSetter"
         android:layout_alignTop="@+id/DataTypeLabel"
         android:layout_alignEnd="@+id/TitleLabel"
-        android:prompt="@string/hello_world" />
+        android:prompt="@string/hello_world"
+        android:layout_alignStart="@+id/SendButton" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/SpinnerChoise"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/CommentLabel"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/DynalicLayout"></LinearLayout>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Commentaire"
+        android:id="@+id/CommentSetter"
+        android:editable="true"
+        android:layout_alignStart="@+id/SpinnerChoise"
+        android:layout_alignTop="@+id/CommentLabel"
+        android:layout_alignEnd="@+id/SpinnerChoise"
+        android:background="@color/primary_material_light" />
 
 </RelativeLayout>
