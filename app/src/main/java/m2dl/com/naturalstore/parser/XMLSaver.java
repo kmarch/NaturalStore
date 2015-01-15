@@ -74,7 +74,6 @@ public class XMLSaver {
             transformer.transform(new DOMSource(doc), new StreamResult(sw));
             outputStream.write(sw.toString().getBytes());
             outputStream.close();
-            dataEntryActivity.comment.setText(sw.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -94,6 +93,5 @@ public class XMLSaver {
         catch (IOException e) {
             //You'll need to add proper error handling here
         }
-        dataEntryActivity.comment.setText(text);
     }
 }

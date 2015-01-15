@@ -22,25 +22,33 @@ import m2dl.com.naturalstore.parser.XMLSaver;
 public class DataEntryActivity extends ActionBarActivity implements View.OnTouchListener{
 
     private Spinner spinner;
-    public TextView comment;
-    public XMLSaver xmlSaver;
+    private XMLSaver xmlSaver;
     private XMLReader xmlInitializer;
-    private String GPS;
+    private TextView viewChoises;
+    private TextView viewComment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_entry);
+        viewChoises = (TextView) findViewById(R.id.LabelSpinnerChoices);
+        viewComment = (TextView) findViewById(R.id.CommentSetter);
+        spinner = (Spinner) findViewById(R.id.SpinnerChoice);
+        initComponentsValues();
+    }
+
+    private void initComponentsValues() {
         xmlInitializer =  new XMLReader(this);
         xmlSaver = new XMLSaver(this);
         String [] initArray;
         initArray = initSpinnerArray(xmlInitializer.getDoc().getFirstChild());
         ((Button) findViewById(R.id.SendButton)).setOnTouchListener(this);
-        spinner = (Spinner) findViewById(R.id.SpinnerChoise);
+        ((Button) findViewById(R.id.CancelButton)).setOnTouchListener(this);
         // Create an ArrayAdapter using the string array and a default spinner layout
         setSpinnerValues(initArray);
-        comment = (TextView) findViewById(R.id.CommentSetter);
         spinner.setOnItemSelectedListener(createListener());
+        viewChoises.setText(R.string.defaultChoices);
+        viewComment.setText(R.string.defaultComment);
     }
 
     private void setSpinnerValues(String[] initArray) {
@@ -52,7 +60,11 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnTouch
     }
 
     public boolean onTouch(View v, MotionEvent event) {
-        xmlSaver.saveXML();
+        if(v.getId() == R.id.SendButton) {
+            xmlSaver.saveXML();
+        } else {
+            initComponentsValues();
+        }
         return true;
     }
     @Override
@@ -75,14 +87,6 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnTouch
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public String getGPS() {
-        return GPS;
-    }
-
-    public String getComment() {
-        return comment.getText().toString();
     }
 
     public void changeValues() {
@@ -119,7 +123,9 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnTouch
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (check!=0) {
+                    viewChoises.append(spinner.getSelectedItem().toString()+'\n');
                     changeValues();
+
                 }
                 check++;
             }
