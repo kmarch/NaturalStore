@@ -26,7 +26,7 @@ public class GMailSender extends javax.mail.Authenticator {
 	private String user;
 	private String password;
 	private Session session;
-	
+
 	private Multipart _multipart = new MimeMultipart();
 	static {
 		Security.addProvider(new m2dl.com.naturalstore.mail.JSSEProvider());

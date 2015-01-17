@@ -1,5 +1,6 @@
 package m2dl.com.naturalstore;
 
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -68,7 +69,7 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
         public void onClick(View v) {
             if (v.getId() == R.id.SendButton) {
                 xmlSaver.saveXML();
-                new MultiThread().execute("");
+                new MultiThread(this).execute("");
 
             } else {
                 initComponentsValues();
