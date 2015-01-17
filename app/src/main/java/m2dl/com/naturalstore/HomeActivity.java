@@ -2,7 +2,9 @@ package m2dl.com.naturalstore;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
@@ -14,8 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -31,7 +35,23 @@ public class HomeActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPref= getSharedPreferences("myData", 0);
+        String name = sharedPref.getString("name", "");
+        String email = sharedPref.getString("email", "");
+
+
+        if(name.isEmpty() || email.isEmpty()){
+            Intent intent = new Intent(this,
+                    LoginActivity.class);
+            this.startActivity(intent);
+        }
         setContentView(R.layout.activity_home);
+        final TextView user = (TextView) findViewById(R.id.user);
+        user.setText("Bienvenue " + name);
+
+
+
+
     }
 
     public void takePhoto(View view) {

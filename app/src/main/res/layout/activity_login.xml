@@ -1,0 +1,44 @@
+
+
+    <!-- Login Form -->
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:padding="10dip"
+    tools:context="m2dl.com.naturalstore.LoginActivity">
+<!--  Email Label -->
+<TextView android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:textColor="#372c24"
+    android:text="Name"/>
+
+<EditText android:id="@+id/user_name"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dip"
+    android:layout_marginBottom="20dip"
+    android:singleLine="true"/>
+
+<!--  Password Label -->
+<TextView android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:textColor="#372c24"
+    android:text="Email"/>
+
+<EditText android:id="@+id/user_email"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dip"
+    android:singleLine="true"/>
+<!-- Login button -->
+<Button android:id="@+id/btnLogin"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dip"
+    android:text="Login"/>
+<!-- Link to Registration Screen -->
+</LinearLayout>
+    <!-- Login Form Ends -->
