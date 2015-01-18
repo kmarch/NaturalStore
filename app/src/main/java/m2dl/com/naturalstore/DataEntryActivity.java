@@ -1,6 +1,7 @@
 package m2dl.com.naturalstore;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,6 +30,7 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
     private XMLReader xmlInitializer;
     private TextView viewChoises;
     private TextView viewComment;
+    private String gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,9 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
         viewChoises = (TextView) findViewById(R.id.LabelSpinnerChoices);
         viewComment = (TextView) findViewById(R.id.CommentSetter);
         spinner = (Spinner) findViewById(R.id.SpinnerChoice);
+        Intent intent = getIntent();
+        gps = intent.getStringExtra(getResources().getString(R.string.picture_location_longitude));
+        gps += intent.getStringExtra(getResources().getString(R.string.picture_location_latitude));
         initComponentsValues();
     }
 
@@ -103,7 +108,7 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
     private String[] initSpinnerArray(Node node) {
         String[] initArray;
         initArray = new String[node.getChildNodes().getLength()+1];
-        initArray[0] = "choisissez";
+        initArray[0] = getResources().getString(R.string.choiceMessage);
         for(int i = 1; i<= node.getChildNodes().getLength(); i++ ){
             initArray[i] = node.getChildNodes().item(i-1).getNodeName();
         }

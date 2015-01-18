@@ -18,5 +18,6 @@
     <string name="cameraactivity_uncheck">Annuler la photo</string>
     <string name="picture_location_latitude">Latitude de la photo</string>
     <string name="picture_location_longitude">Longitude de la photo</string>
+    <string name="choiceMessage">Choisissez</string>
 
 </resources>
