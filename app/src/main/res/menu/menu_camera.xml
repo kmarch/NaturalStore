@@ -2,6 +2,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="m2dl.com.naturalstore.CameraActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_uncheck"
+        android:icon="@drawable/uncheck"
+        android:title="@string/cameraactivity_uncheck"
+        app:showAsAction="always" />
+    <item android:id="@+id/action_refresh"
+        android:icon="@drawable/refresh"
+        android:title="@string/cameraactivity_refresh"
+        app:showAsAction="always" />
+    <item android:id="@+id/action_check"
+        android:icon="@drawable/check"
+        android:title="@string/cameraactivity_check"
+        app:showAsAction="always" />
 </menu>
