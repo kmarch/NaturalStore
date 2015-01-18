@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.FloatMath;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -39,6 +43,7 @@ public class CameraActivity extends ActionBarActivity {
     private Float ycenter = null;
     private Float radius = null;
     private Bitmap bmporiginal = null;
+    private Bitmap bmpinterest = null;
     float ratio;
 
 
@@ -62,16 +67,18 @@ public class CameraActivity extends ActionBarActivity {
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 
             Bitmap bitmap = this.getCapturedPicture();
-            imageView.setImageBitmap(bitmap);
             Display display = getWindowManager().getDefaultDisplay();
             Point size = new Point();
             display.getSize(size);
             float width = size.x;
             float height = size.y;
-            System.out.println("openGL = " + GL10.GL_MAX_TEXTURE_SIZE);
+            //System.out.println("openGL = " + GL10.GL_MAX_TEXTURE_SIZE);
 
             ratio = Math.min((width / (float) bitmap.getWidth()), (height / (float) bitmap.getHeight()));
-            imageView.setImageBitmap(Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth()*ratio),(int) (bitmap.getHeight()*ratio) ,false));
+
+            bmporiginal = getCapturedPicture();
+            bmporiginal = Bitmap.createScaledBitmap(bmporiginal, (int) (bmporiginal.getWidth()*ratio),(int) (bmporiginal.getHeight()*ratio) ,false);
+            imageView.setImageBitmap(bmporiginal);
 
             //Listener pour la sélection du point d'intérêt
             imageView.setOnTouchListener(new View.OnTouchListener() {
@@ -80,29 +87,23 @@ public class CameraActivity extends ActionBarActivity {
                     float x = event.getX();
                     float y = event.getY();
 
-                    System.out.println("x = "+x+" y = "+y);
                     if(xcenter == null) {
                         xcenter = x;
                         ycenter = y;
-
-                        bmporiginal = getCapturedPicture();
-                        bmporiginal = Bitmap.createScaledBitmap(bmporiginal, (int) (bmporiginal.getWidth()*ratio),(int) (bmporiginal.getHeight()*ratio) ,false);
-                        imageView.setImageBitmap(bmporiginal);
                     }
 
                     radius = FloatMath.sqrt((x - xcenter) * (x - xcenter) + (y - ycenter) * (y - ycenter));
-                    System.out.println("radius = "+radius);
 
-                    Bitmap bmp = bmporiginal.copy(Bitmap.Config.ARGB_8888, true);
+                    bmpinterest = bmporiginal.copy(Bitmap.Config.ARGB_8888, true);
 
                     Paint p = new Paint();
                     p.setStyle(Paint.Style.STROKE);
                     p.setStrokeWidth(5f);
                     p.setColor(Color.RED);
-                    Canvas c = new Canvas(bmp);
+                    Canvas c = new Canvas(bmpinterest);
                     c.drawCircle(xcenter, ycenter, radius, p);
 
-                    ((ImageView) v).setImageBitmap(bmp);
+                    ((ImageView) v).setImageBitmap(bmpinterest);
 
                     return true;
                 }
@@ -119,6 +120,7 @@ public class CameraActivity extends ActionBarActivity {
     }
 
     public void checkPicture() {
+        this.storePicture(this.bmpinterest);
         Intent intent = new Intent(this, DataEntryActivity.class);
         startActivity(intent);
     }
@@ -131,6 +133,23 @@ public class CameraActivity extends ActionBarActivity {
 
     public void uncheckPicture() {
         System.exit(RESULT_OK);
+    }
+
+    private void storePicture(Bitmap image) {
+        File pictureFile = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES).toString()+File.separator + "temp.png");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(pictureFile);
+            image.compress(Bitmap.CompressFormat.PNG, 0, fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
