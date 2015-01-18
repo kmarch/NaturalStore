@@ -2,21 +2,29 @@
 <PreferenceScreen id="0" xmlns:android="http://schemas.android.com/apk/res/android">
     <root>
         <plante>
-            canabis
+            <fleur>
+                <rouge>rose rouge</rouge>
+                <blanche>rose blanche</blanche>
+                <jaune>rose blanche</jaune>
+            </fleur>
+            <arbre>
+                <fruitEpineux>
+                    maronnier
+                </fruitEpineux>
+                <fruitNonEpineux>
+                    chêne
+                </fruitNonEpineux>
+            </arbre>
         </plante>
         <animal>
             <pate>
-                <poil>
-                    lapin
-                </poil>
-                <sansPoil>
-                    serpent
-                </sansPoil>
+                <quatrePates>
+                    <corne>vache</corne>
+                    <sansCorne>chien</sansCorne>
+                </quatrePates>
+                <deuxPates>kangourou</deuxPates>
             </pate>
-            <sansPate>
-                alien
-            </sansPate>
+            <sansPate>serpent</sansPate>
         </animal>
-        <cheveuxJaune>Naruto</cheveuxJaune>
     </root>
 </PreferenceScreen>

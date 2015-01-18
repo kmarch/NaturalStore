@@ -70,7 +70,7 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
     public void onClick(View v) {
         if (v.getId() == R.id.SendButton) {
             xmlSaver.saveXML();
-            new MultiThread(this).execute("");
+            new MultiThread(this,gps,viewComment.getText().toString()).execute("");
         } else {
             initComponentsValues();
 
