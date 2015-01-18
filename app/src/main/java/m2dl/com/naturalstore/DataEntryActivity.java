@@ -72,6 +72,9 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
         if (v.getId() == R.id.SendButton) {
             xmlSaver.saveXML();
             new MultiThread(this,gps,viewComment.getText().toString()).execute("");
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         } else {
             initComponentsValues();
 
