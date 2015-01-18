@@ -130,8 +130,8 @@ public class CameraActivity extends ActionBarActivity {
 
         this.storePicture(this.bmpinterest);
         Intent intent = new Intent(this, DataEntryActivity.class);
-        intent.putExtra("PICTURE_LOCATION_LATITUDE", location.getLatitude());
-        intent.putExtra("PICTURE_LOCATION_LONGITUDE", location.getLongitude());
+        intent.putExtra(getResources().getString(R.string.picture_location_latitude), location.getLatitude());
+        intent.putExtra(getResources().getString(R.string.picture_location_longitude), location.getLongitude());
         startActivity(intent);
     }
 

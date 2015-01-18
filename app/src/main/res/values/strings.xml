@@ -16,4 +16,7 @@
     <string name="cameraactivity_check">Valider image</string>
     <string name="cameraactivity_refresh">Rafraichir le point d\'intérêt</string>
     <string name="cameraactivity_uncheck">Annuler la photo</string>
+    <string name="picture_location_latitude">Latitude de la photo</string>
+    <string name="picture_location_longitude">Longitude de la photo</string>
+
 </resources>
