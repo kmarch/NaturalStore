@@ -19,5 +19,6 @@
     <string name="picture_location_latitude">Latitude de la photo</string>
     <string name="picture_location_longitude">Longitude de la photo</string>
     <string name="choiceMessage">Choisissez</string>
+    <string name="logo_application">Logo de l\'application</string>
 
 </resources>

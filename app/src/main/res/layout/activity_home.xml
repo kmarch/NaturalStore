@@ -7,7 +7,11 @@
 
     <TextView android:id="@+id/user"
         android:text="" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        style="@style/Base.TextAppearance.AppCompat.Title"
+        android:layout_below="@+id/imageView2"
+        android:layout_marginTop="20dp" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -18,5 +22,14 @@
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/camera_description"
         android:onClick="takePhoto" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:contentDescription="@string/logo_application"
+        android:src="@drawable/icone_natural_store"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
