@@ -1,5 +1,6 @@
 package m2dl.com.naturalstore;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -120,8 +124,14 @@ public class CameraActivity extends ActionBarActivity {
     }
 
     public void checkPicture() {
+        //Location
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
         this.storePicture(this.bmpinterest);
         Intent intent = new Intent(this, DataEntryActivity.class);
+        intent.putExtra("PICTURE_LOCATION_LATITUDE", location.getLatitude());
+        intent.putExtra("PICTURE_LOCATION_LONGITUDE", location.getLongitude());
         startActivity(intent);
     }
 
@@ -149,7 +159,6 @@ public class CameraActivity extends ActionBarActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
