@@ -30,8 +30,7 @@
         android:text="Envoyer"
         android:id="@+id/SendButton"
         android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/ChoiceLabel"
-        android:background="#ff5a83ff" />
+        android:layout_toEndOf="@+id/ChoiceLabel" />
 
     <TextView
         android:layout_width="wrap_content"
