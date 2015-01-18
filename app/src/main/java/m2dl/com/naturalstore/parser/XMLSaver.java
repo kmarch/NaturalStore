@@ -55,11 +55,15 @@ public class XMLSaver {
     }
 
 
-    public void appendNode(String nodeName, String nodeValue) {
+    public void appendNode(String nodeName) {
         Node newNode = doc.createElement(nodeName);
-        newNode.setNodeValue(nodeValue);
         rootElement.appendChild(newNode);
         rootElement = newNode;
+
+    }
+
+    public void appendValue(String value) {
+        rootElement.setTextContent(value);
     }
 
     public void saveXML() {

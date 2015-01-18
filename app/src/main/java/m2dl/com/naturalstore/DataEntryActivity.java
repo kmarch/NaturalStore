@@ -61,20 +61,16 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
         spinner.setAdapter(adapter);
     }
 
-    public boolean onTouch(View v, MotionEvent event) {
-        
-        return true;
-    }
-        public void onClick(View v) {
-            if (v.getId() == R.id.SendButton) {
-                xmlSaver.saveXML();
-                new MultiThread().execute("");
+    public void onClick(View v) {
+        if (v.getId() == R.id.SendButton) {
+            xmlSaver.saveXML();
+            new MultiThread().execute("");
 
-            } else {
-                initComponentsValues();
+        } else {
+            initComponentsValues();
 
-            }
         }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -94,16 +90,17 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
         Document doc = xmlInitializer.getDoc();
         String [] initArray;
         Node node = doc.getElementsByTagName(itemSelect).item(0);
+        xmlSaver.appendNode(node.getNodeName());
         if(node != null && node.getChildNodes().getLength() == 1) {
             initArray = new String [1];
             initArray[0] = node.getFirstChild().getNodeValue();
             setSpinnerValues(initArray);
+            xmlSaver.appendValue(initArray[0]);
         } else if(node != null){
             initArray = initSpinnerArray(node);
             setSpinnerValues(initArray);
         }
         spinner.setOnItemSelectedListener(createListener());
-        xmlSaver.appendNode(node.getNodeName(), node.getNodeValue());
     }
 
     private String[] initSpinnerArray(Node node) {
