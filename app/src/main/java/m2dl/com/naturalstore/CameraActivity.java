@@ -112,6 +112,8 @@ public class CameraActivity extends ActionBarActivity {
                     return true;
                 }
             });
+        } else {
+            uncheckPicture();
         }
     }
 
@@ -123,15 +125,50 @@ public class CameraActivity extends ActionBarActivity {
         return bitmap;
     }
 
+    public Location getLocation() {
+        // Acquire a reference to the system Location Manager
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        // Define a listener that responds to location updates
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                //makeUseOfNewLocation(location);
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            @Override
+            public void onProviderEnabled(String provider) {}
+
+            @Override
+            public void onProviderDisabled(String provider) {}
+        };
+
+        // Register the listener with the Location Manager to receive location updates
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
+        return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+    }
+
     public void checkPicture() {
         //Location
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        //LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        //Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        Location location = this.getLocation();
+        System.out.println("My location please " + location);
 
         this.storePicture(this.bmpinterest);
         Intent intent = new Intent(this, DataEntryActivity.class);
-        intent.putExtra(getResources().getString(R.string.picture_location_latitude), location.getLatitude());
-        intent.putExtra(getResources().getString(R.string.picture_location_longitude), location.getLongitude());
+        if(location != null) {
+            intent.putExtra(getResources().getString(R.string.picture_location_latitude), location.getLatitude());
+            intent.putExtra(getResources().getString(R.string.picture_location_longitude), location.getLongitude());
+        } else {
+            intent.putExtra(getResources().getString(R.string.picture_location_latitude), -1.0);
+            intent.putExtra(getResources().getString(R.string.picture_location_longitude), -1.0);
+        }
         startActivity(intent);
     }
 
