@@ -40,8 +40,10 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
         viewComment = (TextView) findViewById(R.id.CommentSetter);
         spinner = (Spinner) findViewById(R.id.SpinnerChoice);
         Intent intent = getIntent();
-        gps = intent.getStringExtra(getResources().getString(R.string.picture_location_longitude));
-        gps += intent.getStringExtra(getResources().getString(R.string.picture_location_latitude));
+        Bundle bundle = intent.getExtras();
+        gps = bundle.getDouble(getResources().getString(R.string.picture_location_longitude)) + "";
+        gps += ":" + bundle.getDouble(getResources().getString(R.string.picture_location_latitude));
+        System.out.println("Mon gps gps gps = "+gps);
         initComponentsValues();
     }
 
