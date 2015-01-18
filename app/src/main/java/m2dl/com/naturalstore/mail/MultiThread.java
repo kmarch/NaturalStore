@@ -27,7 +27,7 @@ public class MultiThread extends AsyncTask {
 
             GMailSender sender = new GMailSender("naturalstorem2dl@gmail.com", "fds158efssdfsd");
             //sender.addAttachment(Environment.getExternalStorageDirectory().getPath()+"/image.jpg");
-            sender.sendMail(email,email,email,"jordan.blancpoujol@gmail.com");
+            sender.sendMail(email,email,email,"kevinmarchois@gmail.com");
         } catch (Exception e) {
             e.printStackTrace();
 

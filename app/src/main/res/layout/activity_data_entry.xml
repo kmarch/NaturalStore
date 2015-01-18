@@ -30,7 +30,7 @@
         android:text="Envoyer"
         android:id="@+id/SendButton"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_toEndOf="@+id/ChoiceLabel" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
         android:layout_alignTop="@+id/DataTypeLabel"
         android:layout_alignEnd="@+id/TitleLabel"
         android:prompt="@string/hello_world"
-        android:layout_alignStart="@+id/SendButton" />
+        android:layout_toEndOf="@+id/DataTypeLabel" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -77,15 +77,14 @@
         android:layout_below="@+id/SpinnerChoice"
         android:layout_above="@+id/CommentLabel"
         android:layout_alignEnd="@+id/SpinnerChoice"
-        android:layout_toEndOf="@+id/CommentLabel"
-        android:layout_alignStart="@+id/SpinnerChoice" />
+        android:layout_toEndOf="@+id/DataTypeLabel" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Annuler"
         android:id="@+id/CancelButton"
-        android:layout_alignTop="@+id/SendButton"
-        android:layout_alignEnd="@+id/CommentSetter" />
+        android:layout_alignEnd="@+id/CommentSetter"
+        android:layout_below="@+id/CommentLabel" />
 
 </RelativeLayout>

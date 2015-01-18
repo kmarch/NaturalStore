@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
@@ -13,22 +14,38 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.FloatMath;
+import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import javax.microedition.khronos.opengles.GL10;
 
 
 public class CameraActivity extends ActionBarActivity {
     private static final int CAMERA_REQUEST = 1888;
     private ImageView imageView;
-    private Uri imageUri;
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private File path;
+
+
+    //Variable sur le point d'intérêt
+    private Float xcenter = null;
+    private Float ycenter = null;
+    private Float radius = null;
+    private Bitmap bmporiginal = null;
+    private Bitmap bmpinterest = null;
+    float ratio;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,61 +66,90 @@ public class CameraActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_PICTURES).toString()+File.separator + "temp.png", options);
-            System.out.println("iv = "+imageView+" bmp = "+bitmap);
-            imageView.setImageBitmap(bitmap);
-            System.out.println(imageView.getHeight());
-            float ratio = Math.min((imageView.getLayoutParams().width / bitmap.getWidth()), (imageView.getLayoutParams().height / bitmap.getHeight()));
-            ratio = 0.5f;
-            System.out.println(ratio);
-            imageView.setImageBitmap(Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth()*ratio),(int) (bitmap.getHeight()*ratio) ,false));
+            Bitmap bitmap = this.getCapturedPicture();
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            float width = size.x;
+            float height = size.y;
+            //System.out.println("openGL = " + GL10.GL_MAX_TEXTURE_SIZE);
 
-            //set listener
+            ratio = Math.min((width / (float) bitmap.getWidth()), (height / (float) bitmap.getHeight()));
+
+            bmporiginal = getCapturedPicture();
+            bmporiginal = Bitmap.createScaledBitmap(bmporiginal, (int) (bmporiginal.getWidth()*ratio),(int) (bmporiginal.getHeight()*ratio) ,false);
+            imageView.setImageBitmap(bmporiginal);
+
+            //Listener pour la sélection du point d'intérêt
             imageView.setOnTouchListener(new View.OnTouchListener() {
-                private Float radius = null;
-                private Float xcenter = null;
-                private Float ycenter = null;
-                private Bitmap bmporiginal;
-
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     float x = event.getX();
                     float y = event.getY();
 
-                    System.out.println("x = "+x+" y = "+y);
                     if(xcenter == null) {
                         xcenter = x;
                         ycenter = y;
-
-                        BitmapFactory.Options options = new BitmapFactory.Options();
-                        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                        bmporiginal = BitmapFactory.decodeFile(Environment.getExternalStoragePublicDirectory(
-                                Environment.DIRECTORY_PICTURES).toString()+File.separator + "temp.png", options);
-                        bmporiginal = Bitmap.createScaledBitmap(bmporiginal, (int) (bmporiginal.getWidth()*0.5f),(int) (bmporiginal.getHeight()*0.5f) ,false);
-                        imageView.setImageBitmap(bmporiginal);
                     }
 
                     radius = FloatMath.sqrt((x - xcenter) * (x - xcenter) + (y - ycenter) * (y - ycenter));
-                    System.out.println("radius = "+radius);
 
-                    Bitmap bmp = bmporiginal.copy(Bitmap.Config.ARGB_8888, true);
+                    bmpinterest = bmporiginal.copy(Bitmap.Config.ARGB_8888, true);
 
                     Paint p = new Paint();
                     p.setStyle(Paint.Style.STROKE);
                     p.setStrokeWidth(5f);
                     p.setColor(Color.RED);
-                    Canvas c = new Canvas(bmp);
+                    Canvas c = new Canvas(bmpinterest);
                     c.drawCircle(xcenter, ycenter, radius, p);
 
-                    ((ImageView) v).setImageBitmap(bmp);
+                    ((ImageView) v).setImageBitmap(bmpinterest);
 
                     return true;
                 }
             });
         }
+    }
+
+    public Bitmap getCapturedPicture() {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES).toString()+File.separator + "temp.png", options);
+        return bitmap;
+    }
+
+    public void checkPicture() {
+        this.storePicture(this.bmpinterest);
+        Intent intent = new Intent(this, DataEntryActivity.class);
+        startActivity(intent);
+    }
+
+    public void refreshInterestPoint() {
+        xcenter = null;
+        ycenter = null;
+        imageView.setImageBitmap(Bitmap.createScaledBitmap(bmporiginal, (int) (bmporiginal.getWidth()*ratio),(int) (bmporiginal.getHeight()*ratio) ,false));
+    }
+
+    public void uncheckPicture() {
+        System.exit(RESULT_OK);
+    }
+
+    private void storePicture(Bitmap image) {
+        File pictureFile = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES).toString()+File.separator + "temp.png");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(pictureFile);
+            image.compress(Bitmap.CompressFormat.PNG, 0, fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -121,7 +167,14 @@ public class CameraActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_check) {
+            this.checkPicture();
+            return true;
+        } else if (id == R.id.action_uncheck) {
+            this.uncheckPicture();
+            return true;
+        } else if (id == R.id.action_refresh) {
+            this.refreshInterestPoint();
             return true;
         }
 
