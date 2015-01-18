@@ -158,7 +158,6 @@ public class CameraActivity extends ActionBarActivity {
         //Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         Location location = this.getLocation();
-        System.out.println("My location please " + location);
 
         this.storePicture(this.bmpinterest);
         Intent intent = new Intent(this, DataEntryActivity.class);

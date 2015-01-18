@@ -43,7 +43,6 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
         Bundle bundle = intent.getExtras();
         gps = bundle.getDouble(getResources().getString(R.string.picture_location_longitude)) + "";
         gps += ":" + bundle.getDouble(getResources().getString(R.string.picture_location_latitude));
-        System.out.println("Mon gps gps gps = "+gps);
         initComponentsValues();
     }
 
