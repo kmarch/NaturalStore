@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.loca" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.location" />
@@ -23,11 +22,11 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:logo="@drawable/icone_natural_store">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".HomeActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:logo="@drawable/icone_natural_store">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,15 +36,17 @@
         </activity>
         <activity
             android:name=".DataEntryActivity"
-            android:label="@string/title_activity_data_entry">
+            android:label="@string/title_activity_data_entry"
+            android:parentActivityName=".CameraActivity" >
         </activity>
         <activity
             android:name=".CameraActivity"
-            android:label="@string/title_activity_camera" >
+            android:label="@string/title_activity_camera"
+            android:parentActivityName=".HomeActivity" >
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="Login" >
+            android:label="@string/title_activity_login">
         </activity>
     </application>
 </manifest>
