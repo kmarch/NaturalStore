@@ -31,12 +31,14 @@ import m2dl.com.naturalstore.R;
 
 /**
  * Created by kevin marchois on 11/01/2015.
+ * Récupération de la clé de détermination dans le fichier ressource associé
  */
 public class XMLReader {
 
     private DataEntryActivity dataEntryActivity;
     private Document doc;
     private Element rootElement;
+
 
     public XMLReader(DataEntryActivity dataEntryActivity) {
         this.dataEntryActivity  = dataEntryActivity;

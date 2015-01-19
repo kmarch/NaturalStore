@@ -22,7 +22,9 @@ import m2dl.com.naturalstore.mail.MultiThread;
 import m2dl.com.naturalstore.parser.XMLReader;
 import m2dl.com.naturalstore.parser.XMLSaver;
 
-
+/**
+ * Activité de récupération des méta données
+ */
 public class DataEntryActivity extends ActionBarActivity implements View.OnClickListener {
 
     private Spinner spinner;
@@ -46,6 +48,11 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
         initComponentsValues();
     }
 
+    /**
+     * Initialisation des champs modifiables par l'utilisateur
+     * c'est à dire la zone de texte pr le commentaire et la boite à liste
+     * poour la boite à liste on va charger la clé de détermination
+     */
     private void initComponentsValues() {
         xmlInitializer =  new XMLReader(this);
         xmlSaver = new XMLSaver(this);
@@ -68,6 +75,12 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
         spinner.setAdapter(adapter);
     }
 
+    /**
+     * Click de l'utilisateur soit sur le bouton d'annulation et on va réinitialiser
+     * les champs modifiables, soit le bouton envoyer et l'on va générer le xml à envoyer puis
+     * on envoie les meta données
+     * @param v
+     */
     public void onClick(View v) {
         if (v.getId() == R.id.SendButton) {
             xmlSaver.saveXML();
@@ -91,12 +104,20 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Changement des valeurs de la boite à liste suite à une sélection de l'utilisateur
+     * on va ajouter le noeud sélectionné dans le parcours de l'on enregistrera par la suite,
+     * puis on va récupérer ses fils afin de les mettre dans la boite à liste pour continuer le
+     * parcours de la clé de détermination, si on arrive au bout de la clé on va prendre la valeur
+     * du dernier noeud et l'ajouter au chemin parcourru
+     */
     public void changeValues() {
         String itemSelect  = spinner.getSelectedItem().toString();
         Document doc = xmlInitializer.getDoc();
         String [] initArray;
         Node node = doc.getElementsByTagName(itemSelect).item(0);
         xmlSaver.appendNode(node.getNodeName());
+        // on est dans le dernier noeud
         if(node != null && node.getChildNodes().getLength() == 1) {
             initArray = new String [1];
             initArray[0] = node.getFirstChild().getNodeValue();
@@ -109,6 +130,13 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
         spinner.setOnItemSelectedListener(createListener());
     }
 
+    /**
+     * Initialisation des valeurs de la boite à liste représentant la clé de détermination
+     * on va récupérer tout les noeuds fils du noeud courrant et mettre leurs noms dans la boite
+     * à liste
+     * @param node, noeud courrant dans la clé de détermination
+     * @return
+     */
     private String[] initSpinnerArray(Node node) {
         String[] initArray;
         initArray = new String[node.getChildNodes().getLength()+1];
@@ -125,6 +153,7 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
 
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
                 if (check!=0) {
                     viewChoises.append(spinner.getSelectedItem().toString()+'\n');
                     changeValues();

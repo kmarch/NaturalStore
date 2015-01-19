@@ -31,6 +31,7 @@ import m2dl.com.naturalstore.R;
 
 /**
  * Created by kevin marchois on 11/01/2015.
+ * Sauvegarde du chemin parcouru par l'utilisateur sous la forme d'un fichier xml
  */
 public class XMLSaver {
 
@@ -38,6 +39,10 @@ public class XMLSaver {
     private Document doc;
     private Node rootElement;
 
+    /**
+     * Initialisation de l'arbre que l'on va sauvegarder par la suite
+     * @param dataEntryActivity, activité saisissant les meta données
+     */
     public XMLSaver(DataEntryActivity dataEntryActivity) {
         this.dataEntryActivity = dataEntryActivity;
         try {
@@ -55,6 +60,11 @@ public class XMLSaver {
     }
 
 
+    /**
+     * Ajout d'un noeud à l'xml représentant le parcours de l'utilisateur
+     * dans la clé de détermination
+     * @param nodeName noeud à ajouter
+     */
     public void appendNode(String nodeName) {
         Node newNode = doc.createElement(nodeName);
         rootElement.appendChild(newNode);
@@ -62,11 +72,20 @@ public class XMLSaver {
 
     }
 
+    /**
+     * Ajout d'une valeur au fond de l'arbre créer, la valeur sea affecté au
+     * dernier neud créer
+     * @param value, valeur à ajouter
+     */
     public void appendValue(String value) {
         rootElement.setTextContent(value);
     }
 
+    /**
+     * Sauvegarde du xml créer
+     */
     public void saveXML() {
+        //création du fichier s'il n'existe pas
         File file = new File(dataEntryActivity.getFilesDir(), dataEntryActivity.getResources().getString(R.string.xmlFileName));
         FileOutputStream outputStream;
         StringWriter sw = new StringWriter();
@@ -80,22 +99,6 @@ public class XMLSaver {
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        //Read text from file
-        StringBuilder text = new StringBuilder();
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                text.append(line);
-                text.append('\n');
-            }
-            br.close();
-        }
-        catch (IOException e) {
-            //You'll need to add proper error handling here
         }
     }
 }
