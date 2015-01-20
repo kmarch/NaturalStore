@@ -52,7 +52,7 @@ public class XMLSaver {
             // root elements
             doc = docBuilder.newDocument();
             rootElement = doc.createElement(
-                    dataEntryActivity.getResources().getString(R.string.rootElement));
+                   dataEntryActivity.getResources().getString(R.string.rootElement));
             doc.appendChild(rootElement);
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
@@ -86,12 +86,14 @@ public class XMLSaver {
      */
     public void saveXML() {
         //création du fichier s'il n'existe pas
-        File file = new File(dataEntryActivity.getFilesDir(), dataEntryActivity.getResources().getString(R.string.xmlFileName));
+        File file = new File(dataEntryActivity.getFilesDir(),
+                dataEntryActivity.getResources().getString(R.string.xmlFileName));
         FileOutputStream outputStream;
         StringWriter sw = new StringWriter();
         try {
             outputStream =  dataEntryActivity.openFileOutput(
-                    dataEntryActivity.getResources().getString(R.string.xmlFileName), Context.MODE_PRIVATE);
+                    dataEntryActivity.getResources().getString(R.string.xmlFileName),
+                    Context.MODE_PRIVATE);
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.transform(new DOMSource(doc), new StreamResult(sw));

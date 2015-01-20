@@ -35,13 +35,13 @@ import m2dl.com.naturalstore.R;
  */
 public class XMLReader {
 
-    private DataEntryActivity dataEntryActivity;
     private Document doc;
-    private Element rootElement;
 
-
+    /**
+     * Chargement du xml dans la ressource dans l'attribut doc
+     * @param dataEntryActivity,  activité utilisée pour avoir accès aux ressources
+     */
     public XMLReader(DataEntryActivity dataEntryActivity) {
-        this.dataEntryActivity  = dataEntryActivity;
         XmlResourceParser xml ;
            xml = dataEntryActivity.getResources().getXml(R.xml.config);
         try {
@@ -51,7 +51,8 @@ public class XMLReader {
             doc = docBuilder.newDocument();
             xml.next();
             int eventType = xml.getEventType();
-            Node parent = doc.createElement("root");
+            Node parent = doc.createElement(dataEntryActivity.getResources().getString(
+                    R.string.rootElement));
             Node child = null;
             doc.appendChild(parent);
             xml.next();
