@@ -82,7 +82,7 @@ public class XMLSaver {
     }
 
     /**
-     * Sauvegarde du xml créer
+     * Sauvegarde du xml créé
      */
     public void saveXML() {
         //création du fichier s'il n'existe pas
