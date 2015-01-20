@@ -158,6 +158,9 @@ public class CameraActivity extends ActionBarActivity {
         //Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         Location location = this.getLocation();
+        if(this.bmpinterest==null) {
+            this.bmpinterest = this.bmporiginal;
+        }
 
         this.storePicture(this.bmpinterest);
         Intent intent = new Intent(this, DataEntryActivity.class);
@@ -178,7 +181,9 @@ public class CameraActivity extends ActionBarActivity {
     }
 
     public void uncheckPicture() {
-        System.exit(RESULT_OK);
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void storePicture(Bitmap image) {
