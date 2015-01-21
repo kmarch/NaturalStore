@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,22 +17,17 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.FloatMath;
-import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import javax.microedition.khronos.opengles.GL10;
 
 
 public class CameraActivity extends ActionBarActivity {
@@ -50,17 +44,18 @@ public class CameraActivity extends ActionBarActivity {
     private Bitmap bmpinterest = null;
     float ratio;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         this.imageView = (ImageView)this.findViewById(R.id.imageView1);
 
+        //Chemin d'enregistrement de la photo
         File newfolder = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
         path = new File(newfolder, File.separator + "temp.png");
 
+        //Appel de l'application photo
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(path));
@@ -68,15 +63,22 @@ public class CameraActivity extends ActionBarActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //Si une photo a été prise
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+
 
             Bitmap bitmap = this.getCapturedPicture();
             Display display = getWindowManager().getDefaultDisplay();
+
+            /*
+                L'image doit être redimentionnée pour diverses raisons :
+                    - L’image doit être contenue en entier dans la vue.
+                    - OpenGL impose une limite pour la taille d’image affichable dans un canvas.
+             */
             Point size = new Point();
             display.getSize(size);
             float width = size.x;
             float height = size.y;
-            //System.out.println("openGL = " + GL10.GL_MAX_TEXTURE_SIZE);
 
             ratio = Math.min((width / (float) bitmap.getWidth()), (height / (float) bitmap.getHeight()));
 
@@ -91,6 +93,7 @@ public class CameraActivity extends ActionBarActivity {
                     float x = event.getX();
                     float y = event.getY();
 
+                    //Si le centre du cercle n'est pas défini (ex : premier touché sur l'image
                     if(xcenter == null) {
                         xcenter = x;
                         ycenter = y;
@@ -113,10 +116,15 @@ public class CameraActivity extends ActionBarActivity {
                 }
             });
         } else {
+            //Si l'appareil photo est quitté on retourne à la page d'acceuil
             uncheckPicture();
         }
     }
 
+    /**
+     *
+     * @return L'image prise par l'application
+     */
     public Bitmap getCapturedPicture() {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -125,6 +133,10 @@ public class CameraActivity extends ActionBarActivity {
         return bitmap;
     }
 
+    /**
+     *
+     * @return La position (coordonnées) de l'utilisateur
+     */
     public Location getLocation() {
         // Acquire a reference to the system Location Manager
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -152,10 +164,10 @@ public class CameraActivity extends ActionBarActivity {
         return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
     }
 
+    /**
+     * Cette activité est complétée et doit appeler la suivante
+     */
     public void checkPicture() {
-        //Location
-        //LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        //Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         Location location = this.getLocation();
         if(this.bmpinterest==null) {
@@ -174,18 +186,28 @@ public class CameraActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+    /**
+     * Ré-initialiser le centre du cercle (point d'intérêt
+     */
     public void refreshInterestPoint() {
         xcenter = null;
         ycenter = null;
         imageView.setImageBitmap(Bitmap.createScaledBitmap(bmporiginal, (int) (bmporiginal.getWidth()*ratio),(int) (bmporiginal.getHeight()*ratio) ,false));
     }
 
+    /**
+     * Retour à l'acceuil
+     */
     public void uncheckPicture() {
         Intent intent = new Intent(this, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
+    /**
+     *
+     * @param image Image à enregistrers sur le smartphone
+     */
     private void storePicture(Bitmap image) {
         File pictureFile = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES).toString()+File.separator + "temp.png");
