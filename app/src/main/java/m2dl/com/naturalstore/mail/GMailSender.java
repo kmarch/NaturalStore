@@ -1,5 +1,7 @@
 package m2dl.com.naturalstore.mail;
 
+import android.content.Context;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,9 +23,15 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import m2dl.com.naturalstore.R;
+
+/**
+ * Assure l'evnoie de mail en utilisant la plateforme gmail
+ */
 public class GMailSender extends javax.mail.Authenticator {
 	private String mailhost = "smtp.gmail.com";
 	private String user;
+    private Context context;
 	private String password;
 	private Session session;
 
@@ -32,7 +40,8 @@ public class GMailSender extends javax.mail.Authenticator {
 		Security.addProvider(new m2dl.com.naturalstore.mail.JSSEProvider());
 	}
 
-	public GMailSender(String user, String password) {
+	public GMailSender(Context context,String user, String password) {
+        this.context=context;
 		this.user = user;
 		this.password = password;
 
@@ -40,8 +49,8 @@ public class GMailSender extends javax.mail.Authenticator {
 		props.setProperty("mail.transport.protocol", "smtp");
 		props.setProperty("mail.host", mailhost);
 		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", "465");
-		props.put("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.port", context.getResources().getString(R.string.port));
+		props.put("mail.smtp.socketFactory.port", context.getResources().getString(R.string.port));
 		props.put("mail.smtp.socketFactory.class",
 				"javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.socketFactory.fallback", "false");
@@ -85,7 +94,7 @@ public class GMailSender extends javax.mail.Authenticator {
 		BodyPart messageBodyPart = new MimeBodyPart();
 		DataSource source = new FileDataSource(filename);
 		messageBodyPart.setDataHandler(new DataHandler(source));
-		messageBodyPart.setFileName("download image");
+		messageBodyPart.setFileName(context.getResources().getString(R.string.nomPJ));
 		_multipart.addBodyPart(messageBodyPart);
 	}
 

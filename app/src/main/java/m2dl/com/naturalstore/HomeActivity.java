@@ -35,9 +35,9 @@ public class HomeActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPref= getSharedPreferences("myData", 0);
-        String name = sharedPref.getString("name", "");
-        String email = sharedPref.getString("email", "");
+        SharedPreferences sharedPref = getSharedPreferences(getResources().getString(R.string.persisterDonnee), 0);
+        String name = sharedPref.getString(getResources().getString(R.string.persisterDonneeName), "");
+        String email = sharedPref.getString(getResources().getString(R.string.persisterDonneeEmail), "");
 
 
         if(name.isEmpty() || email.isEmpty()){

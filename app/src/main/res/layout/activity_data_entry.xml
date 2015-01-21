@@ -82,7 +82,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Annuler"
+        android:text="Reset"
         android:id="@+id/CancelButton"
         android:layout_alignEnd="@+id/CommentSetter"
         android:layout_below="@+id/CommentLabel" />

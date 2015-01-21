@@ -21,5 +21,20 @@
     <string name="choiceMessage">Choisissez</string>
     <string name="logo_application">Logo de l\'application</string>
     <string name="title_activity_login">Login</string>
+    <string name="adresse_mail">naturalstorem2dl@gmail.com</string>
+    <string name="mot_de_passe">fds158efssdfsd</string>
+    <string name="photoFileName">temp.png</string>
+    <string name="enTeteMail">Votre base de données naturalstore</string>
+    <string name="nomPJ">Pieces jointes</string>
+    <string name="port">465</string>
+    <string name="nameLogin">Merci de renseigner le nom</string>
+    <string name="emailLogin">Merci de renseigner l\'adresse email</string>
+    <string name="nameAndMailLogin">Merci de renseigner le nom et l\'adresse email</string>
+    <string name="emailNonValide">Email non valide</string>
+    <string name="persisterDonnee">myData</string>
+    <string name="persisterDonneeName">name</string>
+    <string name="persisterDonneeEmail">email</string>
+
+
 
 </resources>
