@@ -52,7 +52,8 @@ public class XMLSaver {
             // root elements
             doc = docBuilder.newDocument();
             rootElement = doc.createElement(
-                   dataEntryActivity.getResources().getString(R.string.rootElement));
+                    dataEntryActivity.getResources().getString(
+                            R.string.rootElement));
             doc.appendChild(rootElement);
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();

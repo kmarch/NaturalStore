@@ -140,7 +140,8 @@ public class DataEntryActivity extends ActionBarActivity implements View.OnClick
     private String[] initSpinnerArray(Node node) {
         String[] initArray;
         initArray = new String[node.getChildNodes().getLength()+1];
-        initArray[0] = getResources().getString(R.string.choiceMessage);
+        initArray[0] = getResources().getString(
+                R.string.choiceMessage);
         for(int i = 1; i<= node.getChildNodes().getLength(); i++ ){
             initArray[i] = node.getChildNodes().item(i-1).getNodeName();
         }
