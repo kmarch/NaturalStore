@@ -3,6 +3,9 @@ package m2dl.com.naturalstore.mail;
 import java.security.AccessController;
 import java.security.Provider;
 
+/**
+ * Permet de securiser les echanges d'email
+ */
 public final class JSSEProvider extends Provider {
 
 	public JSSEProvider() {

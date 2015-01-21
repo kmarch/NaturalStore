@@ -63,6 +63,8 @@ public class GMailSender extends javax.mail.Authenticator {
 		return new PasswordAuthentication(user, password);
 	}
 
+    //Assure l'envoi de mail, on met en paramètre les diffèrents élements que comportera
+    // le mail c'est à dire en-tete, corps, adresse d'emission et enfin adresse de reception
 	public synchronized void sendMail(String subject, String body,
 			String sender, String recipients) throws Exception {
 		try {
@@ -90,6 +92,7 @@ public class GMailSender extends javax.mail.Authenticator {
 		}
 	}
 
+    //Permet de rajouter une pièce jointe avec le mail
 	public void addAttachment(String filename) throws Exception {
 		BodyPart messageBodyPart = new MimeBodyPart();
 		DataSource source = new FileDataSource(filename);

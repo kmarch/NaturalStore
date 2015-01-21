@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 /**
  * Formulaire d'inscription lors de la première utilisation de l'application, on gére les cas ou
- * le nom et l'email est non vide ainsi que la bonne syntaxe de l'email
+ * le nom et l'email est vide ainsi que la bonne syntaxe de l'email
  */
 public class LoginActivity extends ActionBarActivity {
 
@@ -65,9 +65,8 @@ public class LoginActivity extends ActionBarActivity {
 
                 }
 
-                /*
-                 Stocke les données dans le fichier de l'application pour qu'elles soient conservées
-                 */
+
+                 //Stocke les données dans le fichier de l'application pour qu'elles soient conservées
                 SharedPreferences mPrefs = getSharedPreferences(getResources().getString(R.string.persisterDonnee), 0);
 
                 SharedPreferences.Editor mEditor = mPrefs.edit();
